@@ -21,7 +21,7 @@ class Post extends Model
         
         $query->when($filters['category'] ?? false, fn($query, $category) => 
             $query->whereHas('category', function ($query) use ($category) {
-                $query->where('slug', $category);x
+                $query->where('slug', $category);
             })
     );
     }
