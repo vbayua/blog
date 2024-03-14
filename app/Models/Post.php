@@ -23,7 +23,13 @@ class Post extends Model
             $query->whereHas('category', function ($query) use ($category) {
                 $query->where('slug', $category);
             })
-    );
+        );
+
+        $query->when($filters['author'] ?? false, fn($query, $author) => 
+            $query->whereHas('author', function ($query) use ($author) {
+                $query->where('username', $author);
+            })
+        );
     }
 
     public function category(): BelongsTo
