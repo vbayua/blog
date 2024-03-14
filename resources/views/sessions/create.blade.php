@@ -2,7 +2,7 @@
     <section class="px-6 py-8">
         <main class="max-w-lg mx-auto mt-10 bg-gray-200 border border-gray-300 rounded-xl p-6">
             <h1 class="text-center text-xl font-bold">Sign In</h1>
-            <form action="/register" method="POST" class="mt-10">
+            <form action="/login" method="POST" class="mt-10">
                 @csrf
                 <div class="mb-6">
                     <label for="email" class="block mb-2 uppercase font-bold text-xs text-gray-700">
