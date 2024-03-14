@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller
@@ -13,12 +14,12 @@ class RegisterController extends Controller
         return view('register.create');
     }
 
-    public function store()
+    public function store(Request $request): RedirectResponse
     {
         // create user
         // to debug: return request()->all()
 
-        $attributes = request()->validate([
+        $attributes = $request->validate([
             'name' => 'required|max:255',
             'username' => 'required|max:100|min:3',
             'email' => 'required|email|max:255',

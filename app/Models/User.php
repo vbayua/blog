@@ -19,6 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
     ];
@@ -43,6 +44,18 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    // You can modify input before inserting to database like this:
+        // AKA Accessor or Mutator
+    // public function setFieldAttribute($value)
+    // {
+    //     $this->attributes['field'] = $value;
+    // }
+    
+    // Password example
+    // public function setPasswordAttribute($password)
+    // {
+    //     $this->attributes['password'] = bcrypt($password);
+    // }
 
     public function posts()
     {

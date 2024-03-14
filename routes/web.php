@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('posts/{post:slug}', [PostController::class,'show'])->name('post');
 Route::get('register', [RegisterController::class, 'create']);
+Route::post('register', [RegisterController::class, 'store'])->name('store');
 
 // Route::get('categories/{category:slug}', function (Category $category) {
 //     return view('posts', [
