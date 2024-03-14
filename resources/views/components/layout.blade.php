@@ -29,11 +29,27 @@
             </div>
 
             <div class="mt-8 md:mt-0">
-                <a href="/" class="text-xs font-bold uppercase">Login</a>
-                <span class="text-xs pl-2">Or</span>
-                <a href="#" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
-                    Sign Up
-                </a>
+                @auth
+                <div class="flex items-center">
+                    <span class="text-xs font-bold uppercase">
+                        Welcome, {{auth()->user()->name}}
+                    </span>
+                    <form action="/logout" method="post">
+                        @csrf
+                        <button type="submit" class="text-white bg-red-400 hover:bg-gray-300 ml-3 rounded-full text-xs font-semibold hover:text-gray-500 uppercase py-3 px-5">
+                            Logout
+                        </button>
+                    </form>
+                </div>
+                @else
+                    <a href="/login" class="text-xs font-bold uppercase text-blue-500 underline">Login</a>
+                    <span class="text-xs pl-2">Or</span>
+                    <a href="/register"
+                        class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
+                        Sign Up
+                    </a>
+
+                @endauth
             </div>
         </nav>
 
@@ -54,12 +70,11 @@
                             </label>
 
                             <input id="email" type="text" placeholder="Your email address"
-                                  class="lg:bg-transparent py-2 lg:py-0 pl-4 focus-within:outline-none">
+                                class="lg:bg-transparent py-2 lg:py-0 pl-4 focus-within:outline-none">
                         </div>
 
                         <button type="submit"
-                                class="transition-colors duration-300 bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0 lg:ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-8"
-                        >
+                            class="transition-colors duration-300 bg-blue-500 hover:bg-blue-600 mt-4 lg:mt-0 lg:ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-8">
                             Subscribe
                         </button>
                     </form>
