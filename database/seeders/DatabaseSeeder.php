@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $user = User::factory()->create([
-            'name' => 'John Doe'
+            'name' => 'John Doe',
+            'password' => 'password'
         ]);
 
         Post::factory(10)->create([
@@ -24,7 +25,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $user = User::factory()->create([
-            'name' => 'Elizabeth'
+            'name' => 'Elizabeth',
+            'password' => 'password'
         ]);
 
         Post::factory(10)->create([
@@ -32,7 +34,8 @@ class DatabaseSeeder extends Seeder
         ]);
         
         $user = User::factory()->create([
-            'name' => 'Adam Levi'
+            'name' => 'Adam Levi',
+            'password' => 'password'
         ]);
 
         Post::factory(5)->create([
