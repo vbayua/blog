@@ -53,10 +53,9 @@
                 </div>
 
                 <section class="mt-10 space-y-6">
-                    <x-post-comment />
-                    <x-post-comment />
-                    <x-post-comment />
-                    <x-post-comment />
+                    @foreach ($post->comments as $comment)
+                        <x-post-comment :comment="$comment" />
+                    @endforeach
                 </section>
             </div>
         </article>
