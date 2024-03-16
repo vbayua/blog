@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
@@ -26,9 +27,18 @@ class PostCommentsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Post $post, Request $request)
     {
-        //
+        //add comment to given post
+
+        //validate request
+        $request->validate(['body' => 'required']);
+        $post->comments()->create([
+            'user_id' => auth()->id(),
+            'body'=> $request->body
+        ]);
+
+        return back();
     }
 
     /**
