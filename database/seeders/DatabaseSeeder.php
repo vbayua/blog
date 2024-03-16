@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,8 +21,14 @@ class DatabaseSeeder extends Seeder
             'password' => 'password'
         ]);
 
+        $category = Category::factory()->create([
+            'name'=> 'Category 1',
+            'slug' => 'category-one',
+        ]);
+
         Post::factory(10)->create([
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'category_id'=> $category->id
         ]);
 
         $user = User::factory()->create([
@@ -29,17 +36,29 @@ class DatabaseSeeder extends Seeder
             'password' => 'password'
         ]);
 
-        Post::factory(10)->create([
-            'user_id' => $user->id
+        $category = Category::factory()->create([
+            'name'=> 'Category 2',
+            'slug' => 'category-two',
         ]);
-        
+
+        Post::factory(10)->create([
+            'user_id' => $user->id,
+            'category_id'=> $category->id
+        ]);
+
         $user = User::factory()->create([
             'name' => 'Adam Levi',
             'password' => 'password'
         ]);
 
+        $category = Category::factory()->create([
+            'name'=> 'Category 3',
+            'slug' => 'category-three',
+        ]);
+
         Post::factory(5)->create([
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'category_id'=> $category->id
         ]);
     }
 }
