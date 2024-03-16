@@ -34,7 +34,7 @@ class PostCommentsController extends Controller
         //validate request
         $request->validate(['body' => 'required']);
         $post->comments()->create([
-            'user_id' => auth()->id(),
+            'user_id' => $request->user()->id,
             'body'=> $request->body
         ]);
 
