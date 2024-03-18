@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Newsletter;
+use App\Services\NewsletterInterface as Newsletter;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
