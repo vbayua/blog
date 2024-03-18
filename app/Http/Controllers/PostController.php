@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -36,10 +37,16 @@ class PostController extends Controller
     {
         $attributes = $request->validate([
             'title' => 'required|max:255',
+            'slug' => ['required', Rule::unique('posts', 'slug')],
+            'excerpt' => 'required|max:255',
             'body' => 'required',
+            'category_id' => ['required', Rule::exists('categories', 'id')],
+            // 'category_id' => 'required|exists:category, category_id'
         ]);
 
-        $post = Post::create($attributes);
+        $attributes['user_id'] = auth()->id();
+
+        Post::create($attributes);
 
         return redirect()->route('home')->with('success', '');
     }
