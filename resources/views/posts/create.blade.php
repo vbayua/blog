@@ -6,72 +6,28 @@
         <x-panel class="max-w-md mx-auto">
             <form action="/admin/posts" method="post" enctype="multipart/form-data">
                 @csrf
-                <div class="mb-6">
-                    <label for="title" class="block mb-2 uppercase font-bold text-xs text-gray-700">
-                        Title
-                    </label>
+                <x-form.field>
+                    <x-form.input name="title" />
+                </x-form.field>
 
-                    <input type="text" name="title" id="title" value="{{ old('title') }}"
-                        class="border border-gray-400 p-2 w-full" required>
+                <x-form.field>
+                    <x-form.input name="slug" />
+                </x-form.field>
 
-                    @error('title')
-                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
+                <x-form.field>
+                    <x-form.input name="thumbnail" type="file" />
+                </x-form.field>
 
-                <div class="mb-6">
-                    <label for="slug" class="block mb-2 uppercase font-bold text-xs text-gray-700">
-                        Slug
-                    </label>
+                <x-form.field>
+                    <x-form.textarea name="excerpt" />
+                </x-form.field>
 
-                    <input type="text" name="slug" id="slug" value="{{ old('slug') }}"
-                        class="border border-gray-400 p-2 w-full" required>
+                <x-form.field>
+                    <x-form.textarea name="body" />
+                </x-form.field>
 
-                    @error('slug')
-                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="mb-6">
-                    <label for="thumbnail" class="block mb-2 uppercase font-bold text-xs text-gray-700">
-                        Thumbnail
-                    </label>
-
-                    <input type="file" name="thumbnail" id="thumbnail" class="border border-gray-400 p-2 w-full">
-
-                    @error('thumbnail')
-                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="mb-6">
-                    <label for="title" class="block mb-2 uppercase font-bold text-xs text-gray-700">
-                        Excerpt
-                    </label>
-
-                    <textarea name="excerpt" rows="5" id="excerpt" class="w-full border border-black p-2" required>{{ old('excerpt') }}</textarea>
-
-                    @error('excerpt')
-                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="mb-6">
-                    <label for="body" class="block mb-2 uppercase font-bold text-xs text-gray-700">
-                        Body
-                    </label>
-
-                    <textarea name="body" id="body" rows="5" class="w-full border border-black p-2" placeholder="Body"required>{{ old('body') }}</textarea>
-
-                    @error('body')
-                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="mb-6">
-                    <label for="category_id" class="block mb-2 uppercase font-bold text-xs text-gray-700">
-                        Category
-                    </label>
+                <x-form.field>
+                    <x-form.label name="category" />
 
                     <select name="category_id" id="category_id">
                         @foreach (\App\Models\Category::all() as $category)
@@ -80,13 +36,10 @@
                                 {{ ucwords($category->name) }}</option>
                         @endforeach
                     </select>
+                    <x-form.error name="category_id" />
+                </x-form.field>
 
-                    @error('category_id')
-                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <x-submit-button>Publish</x-submit-button>
+                <x-submit-button class="mt-6">Publish</x-submit-button>
             </form>
         </x-panel>
     </section>
