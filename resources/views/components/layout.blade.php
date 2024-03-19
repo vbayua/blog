@@ -34,17 +34,23 @@
 
             <div class="mt-8 md:mt-0">
                 @auth
-                <div class="flex items-center">
-                    <span class="text-xs font-bold uppercase">
-                        Welcome, {{auth()->user()->name}}
-                    </span>
-                    <form action="/logout" method="post">
-                        @csrf
-                        <button type="submit" class="text-white bg-red-400 hover:bg-gray-300 ml-3 rounded-full text-xs font-semibold hover:text-gray-500 uppercase py-3 px-5">
-                            Logout
-                        </button>
-                    </form>
-                </div>
+                    <div class="flex items-center">
+                        @auth
+                            <x-dropdown>
+                                <x-slot name="trigger">
+                                    <button class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }} </button>
+
+                                </x-slot>
+                                <x-dropdown-item href="/admin/dashboard" :active="request()->is('/admin/dashboard')" >Dashboard</x-dropdown-item>
+                                <x-dropdown-item href="/admin/posts/create" :active="request()->is('/admin/posts/create')">New Post</x-dropdown-item>
+                                <x-dropdown-item href="#" x-data="{}" @click.prevent="document.querySelector('#logout-form').submit()">Log Out</x-dropdown-item>
+
+                            </x-dropdown>
+                            <form action="/logout" id="$logout-form" method="post" class="hidden">
+                                @csrf
+                            </form>
+                        @endauth
+                    </div>
                 @else
                     <a href="/login" class="text-xs font-bold uppercase text-blue-500 underline">Login</a>
                     <span class="text-xs pl-2">Or</span>
@@ -64,7 +70,8 @@
         {{ $slot }}
 
         <x-flash />
-        <footer id="newsletter" class="bg-gray-100 border border-black border-opacity-5 rounded-xl text-center py-16 px-10 mt-16">
+        <footer id="newsletter"
+            class="bg-gray-100 border border-black border-opacity-5 rounded-xl text-center py-16 px-10 mt-16">
             <h5 class="text-3xl">Stay in touch with the latest posts</h5>
             <p class="text-sm mt-3">Promise to keep the inbox clean. No bugs.</p>
 
@@ -80,11 +87,11 @@
 
                             <input id="email" type="text" name="email" placeholder="Your email address"
                                 class="lg:bg-transparent py-2 lg:py-0 pl-4 focus-within:outline-none">
-                                @error('email')
-                                    <span class="text-xs text-red-500">
-                                        Email Address is required
-                                    </span>
-                                @enderror
+                            @error('email')
+                                <span class="text-xs text-red-500">
+                                    Email Address is required
+                                </span>
+                            @enderror
                         </div>
 
                         <button type="submit"
