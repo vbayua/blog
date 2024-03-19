@@ -66,6 +66,14 @@ class AdminPostController extends Controller
             $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
         }
 
+        $post->update($attributes);
+
         return back()->with('success','Post updated!');
+    }
+
+    public function destroy(Post $post)
+    {
+        $post->delete();
+        return back()->with('success','Post deleted!');
     }
 }
