@@ -22,58 +22,55 @@ class AdminPostController extends Controller
         return view('admin.posts.create');
     }
 
-    public function store(Request $request)
+    public function store()
     {
-        // dd($request->file('thumbnail')->store(''));
-        $attributes = $request->validate([
-            'title' => 'required|max:255',
-            'slug' => ['required', Rule::unique('posts', 'slug')],
-            'thumbnail' => 'image',
-            'excerpt' => 'required|max:255',
-            'body' => 'required',
-            'category_id' => ['required', Rule::exists('categories', 'id')],
-            // 'category_id' => 'required|exists:category, category_id'
-        ]);
+        Post::create(
+            array_merge($this->validatePost(), [
+                'user_id' => auth()->id(),
+                'thumbnail' => request()->file('thumbnail')->store('thumbnails'),
+            ]),
+        );
 
-        $attributes['user_id'] = auth()->id();
-        $attributes['thumbnail'] = $request->file('thumbnail')->store('thumbnails');
-
-        Post::create($attributes);
-
-        return redirect()->route('home')->with('success', '');
+        return redirect()->route('home')->with('success', 'Post Created');
     }
 
     public function edit(Post $post)
     {
         return view('admin.posts.edit', [
-            'post'=> $post,
+            'post' => $post,
         ]);
     }
 
-    public function update(Request $request, Post $post)
+    public function update(Post $post)
     {
-        $attributes = $request->validate([
+        $attributes = $this->validatePost($post);
+
+        if ($attributes['thumbnail'] ?? false) {
+            $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
+        }
+
+        $post->update($attributes);
+
+        return back()->with('success', 'Post updated!');
+    }
+
+    public function destroy(Post $post)
+    {
+        $post->delete();
+        return back()->with('success', 'Post deleted!');
+    }
+
+    protected function validatePost(?Post $post = null)
+    {
+        $post ??= new Post();
+        return request()->validate([
             'title' => 'required|max:255',
-            'slug' => ['required', Rule::unique('posts', 'slug')->ignore($post->id)],
+            'slug' => ['required', Rule::unique('posts', 'slug')->ignore($post)],
             'thumbnail' => 'image',
             'excerpt' => 'required|max:255',
             'body' => 'required',
             'category_id' => ['required', Rule::exists('categories', 'id')],
             // 'category_id' => 'required|exists:category, category_id'
         ]);
-
-        if(isset($attributes['thumbnail'])) {
-            $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
-        }
-
-        $post->update($attributes);
-
-        return back()->with('success','Post updated!');
-    }
-
-    public function destroy(Post $post)
-    {
-        $post->delete();
-        return back()->with('success','Post deleted!');
     }
 }
