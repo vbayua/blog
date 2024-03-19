@@ -41,12 +41,14 @@
                                     <button class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }} </button>
 
                                 </x-slot>
+                                @admin
                                 <x-dropdown-item href="/admin/dashboard" :active="request()->is('/admin/dashboard')" >Dashboard</x-dropdown-item>
                                 <x-dropdown-item href="/admin/posts/create" :active="request()->is('/admin/posts/create')">New Post</x-dropdown-item>
+                                @endadmin
                                 <x-dropdown-item href="#" x-data="{}" @click.prevent="document.querySelector('#logout-form').submit()">Log Out</x-dropdown-item>
 
                             </x-dropdown>
-                            <form action="/logout" id="$logout-form" method="post" class="hidden">
+                            <form action="/logout" id="logout-form" method="post" class="hidden">
                                 @csrf
                             </form>
                         @endauth

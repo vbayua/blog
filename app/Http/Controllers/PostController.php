@@ -13,6 +13,7 @@ class PostController extends Controller
 
     public function index()
     {
+        // dd($this->authorize('admin'));
         return view('posts.index', [
             'posts' => Post::latest()
                 ->filter(request(['search', 'category', 'author']))
